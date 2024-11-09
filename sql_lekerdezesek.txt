@@ -1,0 +1,27 @@
+SELECT COUNT(*)
+FROM anyag
+WHERE nev LIKE '%2%';
+
+
+SELECT m_egys, COUNT(*)
+FROM anyag
+GROUP BY m_egys;
+
+
+SELECT m_egys, COUNT(*)
+FROM anyag
+GROUP BY m_egys
+HAVING COUNT(*) < 10;
+
+-----------------------------------
+
+SELECT nev, egys_ar, db
+FROM anyag
+WHERE db < 25
+ORDER BY egys_ar ASC;
+
+SELECT nev, egys_ar, db, (SELECT AVG(egys_ar) FROM anyag) AS átlagár
+FROM anyag
+WHERE db < 25
+ORDER BY egys_ar;
+
