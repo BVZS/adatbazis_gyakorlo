@@ -2,11 +2,9 @@ SELECT COUNT(*)
 FROM anyag
 WHERE nev LIKE '%2%';
 
-
 SELECT m_egys, COUNT(*)
 FROM anyag
 GROUP BY m_egys;
-
 
 SELECT m_egys, COUNT(*)
 FROM anyag
@@ -24,4 +22,33 @@ SELECT nev, egys_ar, db, (SELECT AVG(egys_ar) FROM anyag) AS átlagár
 FROM anyag
 WHERE db < 25
 ORDER BY egys_ar;
+
+-----------------------------------
+
+SELECT termek
+FROM rendeles
+WHERE id = 4;
+
+SELECT melyik_hol.a_id
+FROM melyik_hol
+WHERE melyik_hol.r_id = 1;
+
+SELECT anyag.nev
+FROM anyag
+INNER JOIN melyik_hol
+ON anyag.id = melyik_hol.a_id
+WHERE melyik_hol.r_id = 1;
+
+-----------------------------------
+
+SELECT osztaly, COUNT(osztaly) AS fő
+FROM diakok
+GROUP BY osztaly;
+
+SELECT osztaly, COUNT(osztaly) AS fő
+FROM diakok
+GROUP BY osztaly
+HAVING COUNT(osztaly) < 3;
+
+
 

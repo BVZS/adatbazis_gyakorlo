@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Nov 09. 10:24
+-- Létrehozás ideje: 2024. Nov 09. 12:33
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -69,6 +69,29 @@ INSERT INTO `anyag` (`id`, `nev`, `m_egys`, `egys_ar`, `db`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Tábla szerkezet ehhez a táblához `melyik_hol`
+--
+
+CREATE TABLE `melyik_hol` (
+  `a_id` int(11) NOT NULL,
+  `r_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `melyik_hol`
+--
+
+INSERT INTO `melyik_hol` (`a_id`, `r_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 1),
+(2, 2),
+(3, 4);
+
+-- --------------------------------------------------------
+
+--
 -- Tábla szerkezet ehhez a táblához `rendeles`
 --
 
@@ -76,7 +99,7 @@ CREATE TABLE `rendeles` (
   `id` int(11) NOT NULL,
   `termek` varchar(10) NOT NULL,
   `db` tinyint(4) NOT NULL,
-  `teljesitve` tinyint(1) NOT NULL
+  `teljesitve` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
@@ -85,7 +108,11 @@ CREATE TABLE `rendeles` (
 
 INSERT INTO `rendeles` (`id`, `termek`, `db`, `teljesitve`) VALUES
 (1, 't1', 55, 0),
-(2, 't2', 25, 0);
+(2, 't2', 25, 0),
+(3, 't2', 10, 1),
+(4, 't2', 10, 0),
+(5, 't2', 10, 1),
+(6, 't2', 10, 0);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -97,6 +124,12 @@ INSERT INTO `rendeles` (`id`, `termek`, `db`, `teljesitve`) VALUES
 ALTER TABLE `anyag`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `nev` (`nev`);
+
+--
+-- A tábla indexei `melyik_hol`
+--
+ALTER TABLE `melyik_hol`
+  ADD PRIMARY KEY (`a_id`,`r_id`) USING BTREE;
 
 --
 -- A tábla indexei `rendeles`
@@ -118,7 +151,7 @@ ALTER TABLE `anyag`
 -- AUTO_INCREMENT a táblához `rendeles`
 --
 ALTER TABLE `rendeles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
